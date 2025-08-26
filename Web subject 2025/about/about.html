@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>最大线性无关组</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .overlay {
+            background-color: rgba(255, 255, 255, 0.6);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /*第一行元素*/
+        .centered-element {
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        .artword{
+            color: rgb(37, 86, 32);
+        }
+
+        .all_member {
+            margin: 0 auto;
+        }
+
+        #display {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+        }
+
+        .member-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+            width: 100%;
+            margin: 40px 0;
+        }
+
+        .card {
+            width: 420px;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative; /* 为光照效果添加定位上下文 */
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        /* 修改部分开始 - 添加光照效果 */
+        .card-1 {
+            background: linear-gradient(135deg, #5fff82 0%, #32ec5a 100%);
+            color: white;
+            overflow: hidden; /* 确保伪元素不会溢出 */
+        }
+        
+        /* 光照效果 */
+        .card-1::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 60%);
+            transform: scale(0);
+            transition: transform 0.5s ease;
+            z-index: 1;
+        }
+        
+        .card-1:hover::after {
+            transform: scale(1);
+        }
+        
+        .card-1 .card-header {
+            padding: 25px;
+            text-align: center;
+            position: relative; /* 确保内容在光照效果之上 */
+            z-index: 2;
+        }
+        
+        .card-1 .profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            backdrop-filter: blur(5px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            position: relative; /* 确保内容在光照效果之上 */
+            z-index: 2;
+        }
+        
+        .card-1 .card-body {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            position: relative; /* 确保内容在光照效果之上 */
+            z-index: 2;
+        }
+        
+        /* 悬停淡入内容区域 */
+        .hidden-content {
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+        
+        .card-1:hover .hidden-content {
+            opacity: 1;
+            max-height: 200px;
+        }
+        /* 修改部分结束 */
+
+        @media (max-width: 768px) {
+            .member-container {
+                gap: 20px;
+            }
+            
+            .card {
+                width: 100%;
+                max-width: 350px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="overlay">
+        <header>
+            <div class="centered-element">
+                <div class="artword">
+                    <h1>
+                        最大线性无关组
+                    </h1>
+                </div>
+            </div>
+            <div class="centered-element">
+                <div class="artword">
+                    <h3>
+                        关于我们
+                    </h3>
+                </div>
+            </div>
+        </header>
+        
+        <section>
+            <div class="member-container">
+                 <div class="card card-1">
+                    <div class="card-header">
+                        <div class="profile-img">CX</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="name">陈晓</div>
+                        <div class="title">创意总监</div>
+                        <p class="bio">品牌策略与视觉识别专家，擅长将创意概念转化为引人入胜的视觉体验，荣获多项国际设计大奖。</p>
+                        
+                        <!-- 修改部分开始 - 悬停淡入内容区域 -->
+                        <div class="hidden-content">
+                            <!-- 这里可以添加悬停时显示的内容 -->
+                            <p>这是悬停时显示的额外内容，您可以在这里填写详细信息。</p>
+                        </div>
+                        <!-- 修改部分结束 -->
+                        
+                        
+                    </div>
+                </div>
+
+                 <div class="card card-1">
+                    <div class="card-header">
+                        <div class="profile-img">CX</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="name">陈晓</div>
+                        <div class="title">创意总监</div>
+                        <p class="bio">品牌策略与视觉识别专家，擅长将创意概念转化为引人入胜的视觉体验，荣获多项国际设计大奖。</p>
+                        
+                        <!-- 修改部分开始 - 悬停淡入内容区域 -->
+                        <div class="hidden-content">
+                            <!-- 这里可以添加悬停时显示的内容 -->
+                            <p>这是悬停时显示的额外内容，您可以在这里填写详细信息。</p>
+                        </div>
+                        <!-- 修改部分结束 -->
+                        
+                        
+                    </div>
+                </div>
+
+                 <div class="card card-1">
+                    <div class="card-header">
+                        <div class="profile-img">CX</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="name">陈晓</div>
+                        <div class="title">创意总监</div>
+                        <p class="bio">品牌策略与视觉识别专家，擅长将创意概念转化为引人入胜的视觉体验，荣获多项国际设计大奖。</p>
+                        
+                        <!-- 修改部分开始 - 悬停淡入内容区域 -->
+                        <div class="hidden-content">
+                            <!-- 这里可以添加悬停时显示的内容 -->
+                            <p>这是悬停时显示的额外内容，您可以在这里填写详细信息。</p>
+                        </div>
+                        <!-- 修改部分结束 -->
+                        
+                    </div>
+                </div>
+
+                 <div class="card card-1">
+                    <div class="card-header">
+                        <div class="profile-img">CX</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="name">陈晓</div>
+                        <div class="title">创意总监</div>
+                        <p class="bio">品牌策略与视觉识别专家，擅长将创意概念转化为引人入胜的视觉体验，荣获多项国际设计大奖。</p>
+                        
+                        <!-- 修改部分开始 - 悬停淡入内容区域 -->
+                        <div class="hidden-content">
+                            <!-- 这里可以添加悬停时显示的内容 -->
+                            <p>这是悬停时显示的额外内容，您可以在这里填写详细信息。</p>
+                        </div>
+                        <!-- 修改部分结束 -->
+                        
+                        
+                    </div>
+                </div>
+
+                 <div class="card card-1">
+                    <div class="card-header">
+                        <div class="profile-img">CX</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="name">陈晓</div>
+                        <div class="title">创意总监</div>
+                        <p class="bio">品牌策略与视觉识别专家，擅长将创意概念转化为引人入胜的视觉体验，荣获多项国际设计大奖。</p>
+                        
+                        <!-- 修改部分开始 - 悬停淡入内容区域 -->
+                        <div class="hidden-content">
+                            <!-- 这里可以添加悬停时显示的内容 -->
+                            <p>这是悬停时显示的额外内容，您可以在这里填写详细信息。</p>
+                        </div>
+                        <!-- 修改部分结束 -->
+                        
+                        
+                    </div>
+                </div>
+
+                 <div class="card card-1">
+                    <div class="card-header">
+                        <div class="profile-img">CX</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="name">陈晓</div>
+                        <div class="title">创意总监</div>
+                        <p class="bio">品牌策略与视觉识别专家，擅长将创意概念转化为引人入胜的视觉体验，荣获多项国际设计大奖。</p>
+                        
+                        <!-- 修改部分开始 - 悬停淡入内容区域 -->
+                        <div class="hidden-content">
+                            <!-- 这里可以添加悬停时显示的内容 -->
+                            <p>这是悬停时显示的额外内容，您可以在这里填写详细信息。</p>
+                        </div>
+                        <!-- 修改部分结束 -->
+                        
+                        
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+</body>
+</html>
