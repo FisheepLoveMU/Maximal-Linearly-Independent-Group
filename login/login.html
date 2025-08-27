@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>简约登录注册</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/login.css">
     <style>
         * {
             margin: 0;
@@ -13,19 +13,11 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: #f5f8ff;
-            padding: 20px;
-        }
-        
+
         .container {
             width: 100%;
             max-width: 400px;
-            background: white;
+            background: rgb(255, 255, 255,0.3);
             border-radius: 16px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             overflow: hidden;
@@ -148,7 +140,7 @@
             <form id="login-form">
                 <div class="input-group">
                     <i class="fas fa-user"></i>
-                    <input type="text" id="login-username" placeholder="用户名或邮箱" required>
+                    <input type="text" id="login-username" placeholder="用户名" required>
                 </div>
                 <div class="input-group">
                     <i class="fas fa-lock"></i>
@@ -164,112 +156,31 @@
         
         <!-- 注册表单 -->
         <div class="form-container register-container">
-            <h2>创建账号</h2>
-            <form id="register-form">
-                <div class="input-group">
-                    <i class="fas fa-user"></i>
-                    <input type="text" id="register-username" placeholder="用户名" required>
-                </div>
-                <div class="input-group">
-                    <i class="fas fa-envelope"></i>
-                    <input type="email" id="register-email" placeholder="邮箱" required>
-                </div>
-                <div class="input-group">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" id="register-password" placeholder="密码" required>
-                </div>
-                <div class="input-group">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" id="register-confirm" placeholder="确认密码" required>
-                </div>
-                <div class="error-message" id="register-error"></div>
-                <button type="submit" class="btn">注册</button>
-            </form>
-            <div class="switch-form">
-                已有账号？<a id="to-login">立即登录</a>
-            </div>
+    <h2>创建账号</h2>
+    <form id="register-form">
+        <div class="input-group">
+            <i class="fas fa-user"></i>
+            <input type="text" id="register-username" placeholder="用户名" required>
+        </div>
+        <!-- 去掉邮箱输入框 -->
+        <div class="input-group">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="register-password" placeholder="密码" required>
+        </div>
+        <div class="input-group">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="register-confirm" placeholder="确认密码" required>
+        </div>
+        <div class="error-message" id="register-error"></div>
+        <button type="submit" class="btn">注册</button>
+    </form>
+    <div class="switch-form">
+        已有账号？<a id="to-login">立即登录</a>
+    </div>
+</div>
         </div>
     </div>
 
-    <script>
-        // 切换表单
-        const container = document.getElementById('container');
-        const toRegister = document.getElementById('to-register');
-        const toLogin = document.getElementById('to-login');
-        
-        toRegister.addEventListener('click', () => {
-            container.classList.add('active');
-        });
-        
-        toLogin.addEventListener('click', () => {
-            container.classList.remove('active');
-        });
-        
-        // 表单验证和提交
-        const loginForm = document.getElementById('login-form');
-        const registerForm = document.getElementById('register-form');
-        const loginError = document.getElementById('login-error');
-        const registerError = document.getElementById('register-error');
-        
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const username = document.getElementById('login-username').value;
-            const password = document.getElementById('login-password').value;
-            
-            // 简单验证
-            if (!username || !password) {
-                showError(loginError, '请输入用户名和密码');
-                return;
-            }
-            
-            // 模拟登录成功
-            showError(loginError, '登录成功！', 'success');
-            // 实际应用中这里应该是API请求
-        });
-        
-        registerForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const username = document.getElementById('register-username').value;
-            const email = document.getElementById('register-email').value;
-            const password = document.getElementById('register-password').value;
-            const confirm = document.getElementById('register-confirm').value;
-            
-            // 验证
-            if (!username || !email || !password || !confirm) {
-                showError(registerError, '请填写所有字段');
-                return;
-            }
-            
-            if (password !== confirm) {
-                showError(registerError, '两次输入的密码不一致');
-                return;
-            }
-            
-            if (password.length < 6) {
-                showError(registerError, '密码长度至少为6位');
-                return;
-            }
-            
-            // 模拟注册成功
-            showError(registerError, '注册成功！', 'success');
-            // 实际应用中这里应该是API请求
-            
-            // 3秒后切换回登录界面
-            setTimeout(() => {
-                container.classList.remove('active');
-            }, 2000);
-        });
-        
-        function showError(element, message, type = 'error') {
-            element.textContent = message;
-            element.style.display = 'block';
-            element.style.color = type === 'error' ? '#ff4757' : '#2ed573';
-            
-            // 5秒后隐藏消息
-            setTimeout(() => {
-                element.style.display = 'none';
-            }, 5000);
-        }
-    </script>
+    <script src="/js/login.js"></script>
 </body>
 </html>
